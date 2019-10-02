@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(title='wereldwijnen')"></head>
+<body>
+
+<h1> <span/> <span/> </h1>
+
+<form  method="post" th:action="@{/reserveren/opslaan}" th:object="${reservatieform}" >
+    <label>
+        Voorstelling
+        <p th:text="*{voorstelling.titel}" />
+    </label>
+
+    <label>
+        Uitvoerders
+        <p th:text="*{voorstelling.uitvoerders}" />
+    </label>
+
+    <label>
+        Datum
+        <p th:text="*{voorstelling.datum}" />
+    </label>
+
+    <label>
+        Prijs
+        <p th:text="|&euro; *{voorstelling.prijs}|" />
+    </label>
+
+    <label>
+        Vrije plaatsen
+        <p th:text="*{voorstelling.vrijeplaatsen}" />
+    </label>
+
+    <label>
+        Plaatsen
+        <input th:field="*{plaatsten}" type="number" min="1" max="20" >
+    </label>
+    <input type="submit" value="reserveren" >
+</form>
+
+</body>
+</html>

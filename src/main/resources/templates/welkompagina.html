@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(title='cultuurhuis')"></head>
+<body>
+
+<h1><span>Voorstellingen</span> <img th:src="@{images/voorstellingen.png}"></h1>
+
+<span id="genre" th:if="${genres != null}">
+    <h3>Genres</h3>
+    <ul th:each="genre:${genres}" th:object="${genre}">
+        <li><a th:href="@{/{id}(id=*{id})}" th:text="*{naam}"></a></li>
+    </ul>
+</span>
+
+<span th:if="${voorstellingen != null}">
+    <h3><span th:text="${gekozengenre.naam}"/> voorstellingen </h3>
+    <table>
+        <tr>
+            <th>Datum</th>
+            <th>Titel</th>
+            <th>Uitvoerders</th>
+            <th>Prijs</th>
+            <th>Vrije plaatsen</th>
+            <th>Reserveren</th>
+        </tr>
+        <tr th:each="voorstelling:${voorstellingen}" th:object="${voorstelling}">
+            <td th:text="*{datum}"/>
+            <td th:text="*{titel}"/>
+            <td th:text="*{uitvoerders}"/>
+            <td> &euro; <span th:text="*{prijs}" /> </td>
+            <td th:text="*{vrijeplaatsen}"/>
+            <td> <a th:href="@{/reserveren/{id}(id=*{id})}"  th:text="reserveren" > <td/>
+        </tr>
+    </table>
+</span>
+
+
+
+</body>
+</html>
