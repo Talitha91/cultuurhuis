@@ -21,6 +21,7 @@ public class ReservatieController {
         Voorstelling voorstelling = optionalVoorstelling.get();
         ReservatieForm reservatieForm = new ReservatieForm(voorstelling,0);
 
+        model.addAttribute("voorstelling",voorstelling);
         model.addAttribute("reservatieform",reservatieForm);
 
         return "plaatsreservatie";
@@ -29,13 +30,12 @@ public class ReservatieController {
     @PostMapping("/opslaan")
     public String opslaanReservatie(Model model, @Valid @ModelAttribute("reservatieform") ReservatieForm reservatieForm, BindingResult result){
         if (result.hasErrors()){
-            System.out.println(reservatieForm);
+            System.out.println("ERRORS VOOR" + reservatieForm.toString());
 
         }
-
+        System.out.println(reservatieForm.toString());
         return "redirect:/";
     }
-
 
 
 }

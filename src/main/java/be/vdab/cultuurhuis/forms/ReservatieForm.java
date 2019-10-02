@@ -35,4 +35,12 @@ public class ReservatieForm {
     public void setPlaatsten(int plaatsten) {
         this.plaatsten = plaatsten;
     }
+
+    @Override
+    public String toString() {
+        return "ReservatieForm{" +
+                "voorstelling=" + voorstelling +
+                ", plaatsten=" + plaatsten +
+                '}';
+    }
 }

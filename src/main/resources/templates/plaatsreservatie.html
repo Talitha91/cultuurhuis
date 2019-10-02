@@ -9,33 +9,36 @@
 <form  method="post" th:action="@{/reserveren/opslaan}" th:object="${reservatieform}" >
     <label>
         Voorstelling
-        <p th:text="*{voorstelling.titel}" />
+        <p th:text="${voorstelling.titel}" />
     </label>
 
     <label>
         Uitvoerders
-        <p th:text="*{voorstelling.uitvoerders}" />
+        <p th:text="${voorstelling.uitvoerders}" />
     </label>
 
     <label>
         Datum
-        <p th:text="*{voorstelling.datum}" />
+        <p th:text="${voorstelling.datum}" />
     </label>
 
     <label>
         Prijs
-        <p th:text="|&euro; *{voorstelling.prijs}|" />
+        <p th:text="| &euro; ${voorstelling.prijs}|" />
     </label>
 
     <label>
         Vrije plaatsen
-        <p th:text="*{voorstelling.vrijeplaatsen}" />
+        <p th:text="${voorstelling.vrijeplaatsen}" />
     </label>
 
     <label>
         Plaatsen
         <input th:field="*{plaatsten}" type="number" min="1" max="20" >
     </label>
+
+    <input th:field="*{voorstelling}" th:type="hidden" required></label>
+
     <input type="submit" value="reserveren" >
 </form>
 
