@@ -1,5 +1,6 @@
 package be.vdab.cultuurhuis.controllers;
 
+import be.vdab.cultuurhuis.domain.Reservaties;
 import be.vdab.cultuurhuis.domain.Voorstelling;
 import be.vdab.cultuurhuis.forms.ReservatieForm;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +21,11 @@ public class ReservatieController {
     public String goToReservatiePagina(Model model, @PathVariable Optional<Voorstelling> optionalVoorstelling){
         Voorstelling voorstelling = optionalVoorstelling.get();
         ReservatieForm reservatieForm = new ReservatieForm(voorstelling,0);
+
+        //TODO inplaats van reservatieForm reservatie met groups gebruiken
+
+        Reservaties reservaties = new Reservaties(null,voorstelling,0);
+        model.addAttribute("reservatie",reservaties);
 
         model.addAttribute("voorstelling",voorstelling);
         model.addAttribute("reservatieform",reservatieForm);
