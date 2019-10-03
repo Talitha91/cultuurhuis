@@ -31,8 +31,9 @@ public class MandController {
     }
 
     @PostMapping("/verwijderen")
-    public String VerwijderGekozenReservaties(Model model, @RequestParam List<String> deletelist ){
-        
+    public String VerwijderGekozenReservaties(Model model, @RequestParam List<Long> deletelist ){
+
+        mandSession.deleteReservaties(deletelist);
 
         return "redirect:/";
     }

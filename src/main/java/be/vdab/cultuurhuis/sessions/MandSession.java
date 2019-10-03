@@ -46,11 +46,15 @@ public class MandSession {
             reservaties.stream().forEach(e -> voorstellingIds.contains(e.getVoorstelling().getId()));
         }
 
+        List<Reservatie> reservatiesToDelete = new ArrayList<>();
+
         for (Reservatie reservatie : reservaties) {
             if (voorstellingIds.contains(reservatie.getVoorstelling().getId())){
-                reservaties.remove(reservatie);
+                reservatiesToDelete.add(reservatie);
             }
         }
+
+        reservatiesToDelete.stream().forEach(r -> reservaties.remove(r));
 
     }
 }
