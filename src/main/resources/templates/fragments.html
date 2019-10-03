@@ -3,3 +3,11 @@
     <title th:text="${title}"></title>
     <link rel="stylesheet" th:href="@{/css/stylesheet.css}">
 </head>
+
+
+<nav th:fragment="navigatie" xmlns:th="http://www.thymeleaf.org" >
+    <ul>
+        <li><a th:href="@{/}" > Voorstellingen</a></li>
+        <li> <a th:href="@{/mand}" >Mandje</a></li>
+    </ul>
+</nav>

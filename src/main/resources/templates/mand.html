@@ -1,10 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="nl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(title='cultuurhuis')"></head>
 <body>
 
+<nav th:replace="fragments::navigatie"/>
+
+<h1>Mandje</h1>
+
+<form th:action="@{/mand/verwijderen}"  method="post"  >
+<table>
+    <tr>
+        <th>Datum</th>
+        <th>Titel</th>
+        <th>Uitvoerders</th>
+        <th>Prijs</th>
+        <th>Plaatsen</th>
+        <th><input type="submit" th:text="verwijderen" ></th>
+    </tr>
+    <tr th:each="reservatie:${reservaties}" th:object="${reservatie}" >
+        <td th:text="${reservatie.voorstelling.datum}" />
+        <td th:text="${reservatie.voorstelling.titel}" />
+        <td th:text="${reservatie.voorstelling.uitvoerders}" />
+        <td th:text="|&euro; ${reservatie.voorstelling.prijs}|" />
+        <td th:text="${reservatie.plaatsen}" />
+        <td>
+            <input type="checkbox" name="deletelist" th:value="${reservatie.voorstelling.id}" >
+        </td>
+    </tr>
+</table>
+</form>
 </body>
 </html>

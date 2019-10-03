@@ -1,18 +1,20 @@
 package be.vdab.cultuurhuis.domain;
 
+import be.vdab.cultuurhuis.constraints.ReservatieConstraint;
+
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
+import java.util.Objects;
+
 
 @Entity
 @Table(name = "reservaties")
-public class Reservaties implements Serializable {
+@ReservatieConstraint
+public class Reservatie implements Serializable {
 
-    public interface reservatieToevoegen{}
     public interface klantToevoegen{}
-
 
     private final static long serialVersionUID = 1L;
 
@@ -25,17 +27,17 @@ public class Reservaties implements Serializable {
     private Klant klant;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "voorstellingid")
-    @NotNull(groups = reservatieToevoegen.class)
+    @NotNull()
     private Voorstelling voorstelling;
-    @Positive(groups = reservatieToevoegen.class)
-    private int plaatsten;
+    @Positive()
+    private int plaatsen;
 
-    protected Reservaties() {}
+    protected Reservatie() {}
 
-    public Reservaties(Klant klant, Voorstelling voorstelling, int plaatsten) {
+    public Reservatie(Klant klant, Voorstelling voorstelling, int plaatsen) {
         this.klant = klant;
         this.voorstelling = voorstelling;
-        this.plaatsten = plaatsten;
+        this.plaatsen = plaatsen;
     }
 
     public long getId() {
@@ -50,17 +52,34 @@ public class Reservaties implements Serializable {
         return voorstelling;
     }
 
-    public int getPlaatsten() {
-        return plaatsten;
+    public int getPlaatsen() {
+        return plaatsen;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservatie that = (Reservatie) o;
+        return klant.equals(that.klant) &&
+                voorstelling.equals(that.voorstelling);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(klant, voorstelling);
     }
 
     @Override
     public String toString() {
-        return "Reservaties{" +
+        return "ReservatieConstraint{" +
                 "id=" + id +
                 ", klant=" + klant +
                 ", voorstelling=" + voorstelling +
-                ", plaatsten=" + plaatsten +
+                ", ReservatieConstraint=" + plaatsen +
                 '}';
     }
+
+
 }
+

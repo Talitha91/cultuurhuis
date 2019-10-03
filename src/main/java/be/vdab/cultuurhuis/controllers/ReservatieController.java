@@ -1,47 +1,51 @@
 package be.vdab.cultuurhuis.controllers;
 
-import be.vdab.cultuurhuis.domain.Reservaties;
+import be.vdab.cultuurhuis.domain.Reservatie;
 import be.vdab.cultuurhuis.domain.Voorstelling;
-import be.vdab.cultuurhuis.forms.ReservatieForm;
-import org.springframework.beans.factory.annotation.Value;
+import be.vdab.cultuurhuis.sessions.MandSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/reserveren")
+@SessionAttributes("reservatie")
 public class ReservatieController {
 
+    private final MandSession mandSession;
+
+    public ReservatieController(MandSession mandSession) {
+        this.mandSession = mandSession;
+    }
+
+    @InitBinder("reservatie")
+    void initBinder(DataBinder binder) {
+        binder.initDirectFieldAccess();
+    }
 
     @GetMapping("/{optionalVoorstelling}")
     public String goToReservatiePagina(Model model, @PathVariable Optional<Voorstelling> optionalVoorstelling){
         Voorstelling voorstelling = optionalVoorstelling.get();
-        ReservatieForm reservatieForm = new ReservatieForm(voorstelling,0);
 
-        //TODO inplaats van reservatieForm reservatie met groups gebruiken
+        Reservatie reservatie = mandSession.geefReservatieVoorVoorstellingOfMaakNieuweReservatie(voorstelling);
 
-        Reservaties reservaties = new Reservaties(null,voorstelling,0);
-        model.addAttribute("reservatie",reservaties);
-
-        model.addAttribute("voorstelling",voorstelling);
-        model.addAttribute("reservatieform",reservatieForm);
-
+        model.addAttribute("reservatie", reservatie);
         return "plaatsreservatie";
     }
 
     @PostMapping("/opslaan")
-    public String opslaanReservatie(Model model, @Valid @ModelAttribute("reservatieform") ReservatieForm reservatieForm, BindingResult result){
+    public String opslaanReservatie(Model model, @Valid Reservatie reservatie, BindingResult result, SessionStatus sessionStatus){
         if (result.hasErrors()){
-            System.out.println("ERRORS VOOR" + reservatieForm.toString());
-
+            return "plaatsreservatie";
         }
-        System.out.println(reservatieForm.toString());
+        mandSession.addReservatie(reservatie);
+        sessionStatus.setComplete();
         return "redirect:/";
     }
-
-
 }

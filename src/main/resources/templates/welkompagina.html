@@ -4,6 +4,9 @@
 <head th:replace="fragments::head(title='cultuurhuis')"></head>
 <body>
 
+<nav th:replace="fragments::navigatie"/>
+
+
 <h1><span>Voorstellingen</span> <img th:src="@{images/voorstellingen.png}"></h1>
 
 <span id="genre" th:if="${genres != null}">
@@ -28,9 +31,10 @@
             <td th:text="*{datum}"/>
             <td th:text="*{titel}"/>
             <td th:text="*{uitvoerders}"/>
-            <td> &euro; <span th:text="*{prijs}" /> </td>
+            <td th:text="| &euro; *{prijs} |"/>
             <td th:text="*{vrijeplaatsen}"/>
-            <td> <a th:href="@{/reserveren/{id}(id=*{id})}"  th:text="reserveren" > <td/>
+            <td th:if="*{vrijeplaatsen > 0}"> <a th:href="@{/reserveren/{id}(id=*{id})}"  th:text="reserveren" /> </td>
+
         </tr>
     </table>
 </span>
