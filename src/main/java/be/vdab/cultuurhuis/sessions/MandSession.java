@@ -1,10 +1,12 @@
 package be.vdab.cultuurhuis.sessions;
 
+import be.vdab.cultuurhuis.domain.Klant;
 import be.vdab.cultuurhuis.domain.Reservatie;
 import be.vdab.cultuurhuis.domain.Voorstelling;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,7 +14,7 @@ import java.util.stream.Collectors;
 @SessionScope
 public class MandSession {
 
-    private Set<Reservatie> reservaties = new HashSet<>();
+    private List<Reservatie> reservaties = new ArrayList<>();
 
     public MandSession() {
     }
@@ -25,8 +27,8 @@ public class MandSession {
         reservaties.remove(reservatie);
     }
 
-    public Set<Reservatie> getAlleReservaties() {
-        return Collections.unmodifiableSet(reservaties);
+    public List<Reservatie> getAlleReservaties() {
+        return Collections.unmodifiableList(reservaties);
     }
 
     public Reservatie geefReservatieVoorVoorstellingOfMaakNieuweReservatie(Voorstelling voorstelling) {
@@ -53,8 +55,22 @@ public class MandSession {
                 reservatiesToDelete.add(reservatie);
             }
         }
-
         reservatiesToDelete.stream().forEach(r -> reservaties.remove(r));
+    }
 
+    public BigDecimal getTotaalTeBetalen(){
+        BigDecimal result = BigDecimal.ZERO;
+
+        for (Reservatie reservatie : reservaties) {
+            result.add(reservatie.getVoorstelling().getPrijs().multiply(BigDecimal.valueOf(reservatie.getPlaatsen())));
+        }
+        return result;
+    }
+
+    public void addKlantenToReservaties(Klant klant){
+
+        for (Reservatie reservatie : reservaties) {
+            reservatie.setKlant(klant);
+        }
     }
 }

@@ -2,6 +2,8 @@ package be.vdab.cultuurhuis.domain;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
@@ -22,13 +24,20 @@ public class Klant implements Serializable {
     @Embedded
     private Adres adres;
 
+    @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+")
+    private String gebruikersnaam;
+    @NotBlank
+    private String paswoord;
+
     protected Klant() {
     }
 
-    public Klant(@Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+") String voornaam, @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+") String familienaam, @Valid Adres adres) {
+    public Klant(@Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+") String voornaam, @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+") String familienaam, @Valid Adres adres, @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+") String gebruikersnaam, @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+") String paswoord) {
         this.voornaam = voornaam;
         this.familienaam = familienaam;
         this.adres = adres;
+        this.gebruikersnaam = gebruikersnaam;
+        this.paswoord = paswoord;
     }
 
     public long getId() {
@@ -45,6 +54,14 @@ public class Klant implements Serializable {
 
     public Adres getAdres() {
         return adres;
+    }
+
+    public String getGebruikersnaam() {
+        return gebruikersnaam;
+    }
+
+    public String getPaswoord() {
+        return paswoord;
     }
 
     @Override

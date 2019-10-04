@@ -56,6 +56,10 @@ public class Reservatie implements Serializable {
         return plaatsen;
     }
 
+    public void setKlant(Klant klant) {
+        this.klant = klant;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

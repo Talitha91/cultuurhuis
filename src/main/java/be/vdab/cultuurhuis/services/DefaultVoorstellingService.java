@@ -4,11 +4,14 @@ import be.vdab.cultuurhuis.domain.Genre;
 import be.vdab.cultuurhuis.domain.Voorstelling;
 import be.vdab.cultuurhuis.repositories.VoorstellingRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 public class DefaultVoorstellingService implements VoorstellingService {
 
     private VoorstellingRepository voorstellingRepository;

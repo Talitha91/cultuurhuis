@@ -19,6 +19,16 @@ public class Adres implements Serializable {
     @Pattern(regexp = "(\\p{L}|\\p{N}|_|-|\\.)+")
     private String gemeente;
 
+    protected Adres() {
+    }
+
+    public Adres(@Pattern(regexp = "(\\p{L}|\\p{N}|_|-|\\.)+") String straat, @Pattern(regexp = "(\\p{L}|\\p{N}|_|-|\\.)+") String huisnr, @Pattern(regexp = "(\\p{N})+") String postcode, @Pattern(regexp = "(\\p{L}|\\p{N}|_|-|\\.)+") String gemeente) {
+        this.straat = straat;
+        this.huisnr = huisnr;
+        this.postcode = postcode;
+        this.gemeente = gemeente;
+    }
+
     public String getStraat() {
         return straat;
     }

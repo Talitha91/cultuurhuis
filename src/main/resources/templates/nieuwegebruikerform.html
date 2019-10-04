@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(title='cultuurhuis')"></head>
+<body>
+
+<nav th:replace="fragments::navigatie"/>
+
+<h1>Nieuwe Klant</h1>
+
+
+<form method="post" th:action="@{/nieuwegebruiker/opslaan}" th:object="${klant}" >
+
+
+    <label>Voornaam
+        <span th:errors="*{voornaam}"></span>
+        <input type="text" th:field="*{voornaam}" autofocus required>
+    </label>
+
+    <label>Familienaam
+        <span th:errors="*{familienaam}"></span>
+        <input type="text" th:field="*{familienaam}" autofocus required>
+    </label>
+
+    <label>Straat
+        <span th:errors="*{straat}"></span>
+        <input type="text" th:field="*{straat}" autofocus required>
+    </label>
+
+    <label>Huisnr
+        <span th:errors="*{huisnr}"></span>
+        <input type="text" th:field="*{huisnr}" autofocus required>
+    </label>
+
+    <label>Postcode
+        <span th:errors="*{postcode}"></span>
+        <input type="text" th:field="*{postcode}" autofocus required>
+    </label>
+
+    <label>Gemeente
+        <span th:errors="*{gemeente}"></span>
+        <input type="text" th:field="*{gemeente}" autofocus required>
+    </label>
+
+    <label>Gebruikersnaam
+        <span th:errors="*{gebruikersnaam}"></span>
+        <input type="text" th:field="*{gebruikersnaam}" autofocus required>
+    </label>
+
+    <label>Paswoord
+        <span th:errors="*{paswoord}"></span>
+        <input type="text" th:field="*{paswoord}" autofocus required>
+    </label>
+
+    <label>Herhaal paswoord
+        <span th:errors="*{paswoordcheck}"></span>
+        <input type="text" th:field="*{paswoordcheck}" autofocus required>
+    </label>
+
+    <input type="submit" value="OK" >
+</form>
+</body>
+</html>

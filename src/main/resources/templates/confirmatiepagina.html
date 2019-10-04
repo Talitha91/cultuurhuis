@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments::head(title='cultuurhuis')"></head>
+<body>
+
+<nav th:replace="fragments::navigatie"/>
+
+<h1>Overzicht</h1>
+
+<h3>Gelukte Reservaties</h3>
+
+
+<h3>Mislukte Reservaties</h3>
+
+
+<form method="post" th:action="@{/}"  >
+    <input type="submit" value="bevestigen" >
+</form>
+
+</body>
+</html>
