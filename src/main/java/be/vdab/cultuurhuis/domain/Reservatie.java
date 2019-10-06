@@ -60,30 +60,22 @@ public class Reservatie implements Serializable {
         this.klant = klant;
     }
 
+    public void setPlaatsen(int plaatsen) {
+        this.plaatsen = plaatsen;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reservatie that = (Reservatie) o;
-        return klant.equals(that.klant) &&
-                voorstelling.equals(that.voorstelling);
+        return Objects.equals(klant, that.klant) &&
+                Objects.equals(voorstelling, that.voorstelling);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(klant, voorstelling);
     }
-
-    @Override
-    public String toString() {
-        return "ReservatieConstraint{" +
-                "id=" + id +
-                ", klant=" + klant +
-                ", voorstelling=" + voorstelling +
-                ", ReservatieConstraint=" + plaatsen +
-                '}';
-    }
-
-
 }
 

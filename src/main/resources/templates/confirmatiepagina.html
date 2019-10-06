@@ -8,10 +8,47 @@
 
 <h1>Overzicht</h1>
 
-<h3>Gelukte Reservaties</h3>
+<h3>Alle Reservaties</h3>
+<table>
+    <tr>
+        <th>Datum</th>
+        <th>Titel</th>
+        <th>Uitvoerders</th>
+        <th>Prijs</th>
+        <th>Plaatsen</th>
+    </tr>
+    <tr th:each="reservatie:${allereservaties}" th:object="${reservatie}" >
+        <td th:text="*{voorstelling.datum}" ></td>
+        <td th:text="*{voorstelling.titel}" ></td>
+        <td th:text="*{voorstelling.uitvoerders}" ></td>
+        <td th:text="*{voorstelling.prijs}" ></td>
+        <td th:text="*{plaatsen}" ></td>
+    </tr>
+</table>
+
+
 
 
 <h3>Mislukte Reservaties</h3>
+<table>
+    <tr>
+        <th>Datum</th>
+        <th>Titel</th>
+        <th>Uitvoerders</th>
+        <th>Prijs</th>
+        <th>Plaatsen</th>
+        <th>Vrije Plaatsen</th>
+    </tr>
+    <tr th:each="reservatie:${misluktereservaties}" th:object="${reservatie}" >
+        <td th:text="*{voorstelling.datum}" ></td>
+        <td th:text="*{voorstelling.titel}" ></td>
+        <td th:text="*{voorstelling.uitvoerders}" ></td>
+        <td th:text="*{voorstelling.prijs}" ></td>
+        <td th:text="*{plaatsen}" ></td>
+        <td th:text="*{voorstelling.vrijeplaatsen}" ></td>
+    </tr>
+
+</table>
 
 
 <form method="post" th:action="@{/}"  >

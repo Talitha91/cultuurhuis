@@ -20,7 +20,12 @@ public class MandSession {
     }
 
     public void addReservatie(Reservatie reservatie) {
-        reservaties.add(reservatie);
+
+        if (!reservaties.contains(reservatie)){
+            reservaties.add(reservatie);
+        }
+
+
     }
 
     public void removeReservatie(Reservatie reservatie) {
@@ -42,20 +47,20 @@ public class MandSession {
         }
     }
 
-    public void deleteReservaties(List<Long> voorstellingIds){
-
-        for (Long id : voorstellingIds) {
-            reservaties.stream().forEach(e -> voorstellingIds.contains(e.getVoorstelling().getId()));
-        }
+    public void deleteReservaties(List<Voorstelling> voorstellingToDelete){
 
         List<Reservatie> reservatiesToDelete = new ArrayList<>();
 
         for (Reservatie reservatie : reservaties) {
-            if (voorstellingIds.contains(reservatie.getVoorstelling().getId())){
+
+            if (voorstellingToDelete.contains(reservatie.getVoorstelling())){
                 reservatiesToDelete.add(reservatie);
             }
         }
-        reservatiesToDelete.stream().forEach(r -> reservaties.remove(r));
+
+        for (Reservatie reservatie : reservatiesToDelete) {
+            reservaties.remove(reservatie);
+        }
     }
 
     public BigDecimal getTotaalTeBetalen(){

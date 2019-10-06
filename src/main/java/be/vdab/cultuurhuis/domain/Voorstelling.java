@@ -78,6 +78,10 @@ public class Voorstelling implements Serializable {
         return genre;
     }
 
+    public void verminderenplaatsen(int aantal){
+        this.vrijeplaatsen -= aantal;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

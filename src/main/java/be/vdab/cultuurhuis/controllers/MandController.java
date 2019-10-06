@@ -1,8 +1,11 @@
 package be.vdab.cultuurhuis.controllers;
 
 import be.vdab.cultuurhuis.domain.Klant;
+import be.vdab.cultuurhuis.domain.Reservatie;
+import be.vdab.cultuurhuis.domain.Voorstelling;
 import be.vdab.cultuurhuis.services.KlantService;
 import be.vdab.cultuurhuis.services.ReservatieService;
+import be.vdab.cultuurhuis.services.VoorstellingService;
 import be.vdab.cultuurhuis.sessions.MandSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +22,13 @@ public class MandController {
     private final MandSession mandSession;
     private final KlantService klantService;
     private final ReservatieService reservatieService;
+    private final VoorstellingService voorstellingService;
 
-    public MandController(MandSession mandSession, KlantService klantService, ReservatieService reservatieService) {
+    public MandController(MandSession mandSession, KlantService klantService, ReservatieService reservatieService, VoorstellingService voorstellingService) {
         this.mandSession = mandSession;
         this.klantService = klantService;
         this.reservatieService = reservatieService;
+        this.voorstellingService = voorstellingService;
     }
 
     @GetMapping
@@ -39,7 +44,9 @@ public class MandController {
     @PostMapping("/verwijderen")
     public String VerwijderGekozenReservaties(Model model, @RequestParam List<Long> deletelist ){
 
-        mandSession.deleteReservaties(deletelist);
+        List<Voorstelling> voorstellingenToDelete = voorstellingService.findByIds(deletelist);
+
+        mandSession.deleteReservaties(voorstellingenToDelete);
 
         return "redirect:/";
     }
@@ -58,11 +65,12 @@ public class MandController {
     public String ReservatiesOpslaan(Model model, Principal principal){
 
         Klant klant = klantService.findByGebruikersnaam(principal.getName()).get();
-
         mandSession.addKlantenToReservaties(klant);
 
-        reservatieService.createAll(mandSession.getAlleReservaties());
+        List<Reservatie> mislukteReservaties = reservatieService.createAll(mandSession.getAlleReservaties());
 
+        model.addAttribute("misluktereservaties", mislukteReservaties);
+        model.addAttribute("allereservaties", mandSession.getAlleReservaties());
 
         return "confirmatiepagina";
     }

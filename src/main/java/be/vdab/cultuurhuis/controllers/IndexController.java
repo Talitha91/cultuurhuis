@@ -39,8 +39,6 @@ public class IndexController {
             model.addAttribute("voorstellingen", voorstellingService.findAllVoorstellingVoorGenre(gekozenGenre));
 
         }
-
         return goToWelkomPagina(model);
     }
-
 }
