@@ -9,7 +9,7 @@
     <ul>
         <li><a th:href="@{/}"> Voorstellingen</a></li>
         <li><a th:href="@{/mand}">Mandje</a></li>
-        <li><a th:href="@{/mand/bevestigen}">Bevestigen</a></li>
+        <li th:if="${mandsize > 0}"  ><a th:href="@{/mand/bevestigen}">Bevestigen</a></li>
         <li  sec:authorize="isAnonymous()"  ><a th:href="@{/login}">Aanmelden</a></li>
         <li sec:authorize="isAuthenticated()">
             <form method="post" th:action="@{/logout}">

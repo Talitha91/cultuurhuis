@@ -1,27 +1,24 @@
 package be.vdab.cultuurhuis.form;
 
 import be.vdab.cultuurhuis.constraints.ReservatieConstraint;
-import be.vdab.cultuurhuis.domain.Voorstelling;
-
+import be.vdab.cultuurhuis.entities.Voorstelling;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @ReservatieConstraint
 public class ReservatieForm {
 
-    @Positive
+    @NotNull
     private Voorstelling voorstelling;
     @Positive
     private int plaatsen;
 
+    protected ReservatieForm() {}
 
-    protected ReservatieForm() {
-    }
-
-    public ReservatieForm(@Positive Voorstelling voorstelling, @Positive int plaatsen) {
+    public ReservatieForm(Voorstelling voorstelling, @Positive int plaatsen) {
         this.voorstelling = voorstelling;
         this.plaatsen = plaatsen;
     }
-
 
     public Voorstelling getVoorstelling() {
         return voorstelling;

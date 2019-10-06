@@ -1,8 +1,7 @@
 package be.vdab.cultuurhuis.sessions;
 
-import be.vdab.cultuurhuis.domain.Klant;
-import be.vdab.cultuurhuis.domain.Reservatie;
-import be.vdab.cultuurhuis.domain.Voorstelling;
+import be.vdab.cultuurhuis.entities.Voorstelling;
+import be.vdab.cultuurhuis.form.ReservatieForm;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -14,68 +13,59 @@ import java.util.stream.Collectors;
 @SessionScope
 public class MandSession {
 
-    private List<Reservatie> reservaties = new ArrayList<>();
+    private List<ReservatieForm> reservaties = new ArrayList<>();
 
-    public MandSession() {
-    }
+    public MandSession() {}
 
-    public void addReservatie(Reservatie reservatie) {
-
-        if (!reservaties.contains(reservatie)){
-            reservaties.add(reservatie);
+    public void addReservatie(ReservatieForm reservatieForm) {
+        if (!reservaties.contains(reservatieForm)){
+            reservaties.add(reservatieForm);
         }
-
-
     }
 
-    public void removeReservatie(Reservatie reservatie) {
-        reservaties.remove(reservatie);
-    }
-
-    public List<Reservatie> getAlleReservaties() {
+    public List<ReservatieForm> getAlleReservaties() {
         return Collections.unmodifiableList(reservaties);
     }
 
-    public Reservatie geefReservatieVoorVoorstellingOfMaakNieuweReservatie(Voorstelling voorstelling) {
-        List<Reservatie> res = reservaties.stream()
+    public ReservatieForm geefReservatieVoorVoorstellingOfMaakNieuweReservatie(Voorstelling voorstelling) {
+        List<ReservatieForm> res = reservaties.stream()
                                         .filter(reservatie -> reservatie.getVoorstelling().equals(voorstelling))
                                         .collect(Collectors.toList());
         if (res.size()==1){
-            return res.get(0);
+                return res.get(0);
         }else{
-            return new Reservatie(null,voorstelling,0);
+            return new ReservatieForm(voorstelling,0);
         }
     }
 
     public void deleteReservaties(List<Voorstelling> voorstellingToDelete){
 
-        List<Reservatie> reservatiesToDelete = new ArrayList<>();
+        List<ReservatieForm> reservatiesToDelete = new ArrayList<>();
 
-        for (Reservatie reservatie : reservaties) {
-
+        for (ReservatieForm reservatie : reservaties) {
             if (voorstellingToDelete.contains(reservatie.getVoorstelling())){
                 reservatiesToDelete.add(reservatie);
             }
         }
-
-        for (Reservatie reservatie : reservatiesToDelete) {
+        for (ReservatieForm reservatie : reservatiesToDelete) {
             reservaties.remove(reservatie);
         }
     }
 
-    public BigDecimal getTotaalTeBetalen(){
-        BigDecimal result = BigDecimal.ZERO;
-
-        for (Reservatie reservatie : reservaties) {
-            result.add(reservatie.getVoorstelling().getPrijs().multiply(BigDecimal.valueOf(reservatie.getPlaatsen())));
-        }
-        return result;
+    public void clearMand(){
+        this.reservaties = new ArrayList<>();
     }
 
-    public void addKlantenToReservaties(Klant klant){
+    public int getMandSize(){
+        return this.reservaties.size();
+    }
 
-        for (Reservatie reservatie : reservaties) {
-            reservatie.setKlant(klant);
+    public BigDecimal getTotaalTeBetalen(){
+        BigDecimal result = BigDecimal.ZERO;
+        for (ReservatieForm reservatie : reservaties) {
+           result = result.add(reservatie.getVoorstelling().getPrijs().multiply(BigDecimal.valueOf(reservatie.getPlaatsen())));
+
         }
+        return result;
     }
 }

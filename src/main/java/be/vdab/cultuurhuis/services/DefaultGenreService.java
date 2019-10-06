@@ -1,6 +1,6 @@
 package be.vdab.cultuurhuis.services;
 
-import be.vdab.cultuurhuis.domain.Genre;
+import be.vdab.cultuurhuis.entities.Genre;
 import be.vdab.cultuurhuis.repositories.GenreRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -21,6 +21,6 @@ public class DefaultGenreService implements GenreService {
 
     @Override
     public List<Genre> findAllOrderAlphabetical() {
-        return genreRepository.findAll(Sort.by(Sort.Direction.DESC,"naam"));
+        return genreRepository.findAll(Sort.by(Sort.Direction.ASC,"naam"));
     }
 }

@@ -1,4 +1,4 @@
-package be.vdab.cultuurhuis.domain;
+package be.vdab.cultuurhuis.entities;
 
 
 import javax.persistence.Embeddable;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Embeddable
 public class Adres implements Serializable {
 
-    private final static long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Pattern(regexp = "(\\p{L}|\\p{N}|_|-|\\.)+")
     private String straat;
@@ -19,10 +19,9 @@ public class Adres implements Serializable {
     @Pattern(regexp = "(\\p{L}|\\p{N}|_|-|\\.)+")
     private String gemeente;
 
-    protected Adres() {
-    }
+    protected Adres() {}
 
-    public Adres(@Pattern(regexp = "(\\p{L}|\\p{N}|_|-|\\.)+") String straat, @Pattern(regexp = "(\\p{L}|\\p{N}|_|-|\\.)+") String huisnr, @Pattern(regexp = "(\\p{N})+") String postcode, @Pattern(regexp = "(\\p{L}|\\p{N}|_|-|\\.)+") String gemeente) {
+    public Adres(String straat, String huisnr, String postcode, String gemeente) {
         this.straat = straat;
         this.huisnr = huisnr;
         this.postcode = postcode;

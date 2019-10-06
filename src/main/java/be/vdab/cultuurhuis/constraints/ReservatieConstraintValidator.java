@@ -1,6 +1,5 @@
 package be.vdab.cultuurhuis.constraints;
 
-import be.vdab.cultuurhuis.domain.Reservatie;
 import be.vdab.cultuurhuis.form.ReservatieForm;
 
 import javax.validation.ConstraintValidator;

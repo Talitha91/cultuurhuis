@@ -27,7 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return impl;
     }
 
-
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
@@ -47,8 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
 
 
 }

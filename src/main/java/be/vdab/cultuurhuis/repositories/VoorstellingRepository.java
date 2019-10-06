@@ -1,7 +1,7 @@
 package be.vdab.cultuurhuis.repositories;
 
-import be.vdab.cultuurhuis.domain.Genre;
-import be.vdab.cultuurhuis.domain.Voorstelling;
+import be.vdab.cultuurhuis.entities.Genre;
+import be.vdab.cultuurhuis.entities.Voorstelling;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

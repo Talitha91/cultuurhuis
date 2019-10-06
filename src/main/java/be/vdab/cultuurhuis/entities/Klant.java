@@ -1,9 +1,8 @@
-package be.vdab.cultuurhuis.domain;
+package be.vdab.cultuurhuis.entities;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
@@ -32,7 +31,7 @@ public class Klant implements Serializable {
     protected Klant() {
     }
 
-    public Klant(@Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+") String voornaam, @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+") String familienaam, @Valid Adres adres, @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+") String gebruikersnaam, @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+") String paswoord) {
+    public Klant( String voornaam, String familienaam, Adres adres,  String gebruikersnaam, String paswoord) {
         this.voornaam = voornaam;
         this.familienaam = familienaam;
         this.adres = adres;

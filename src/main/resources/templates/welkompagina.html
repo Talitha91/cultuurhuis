@@ -33,7 +33,7 @@
             <td th:text="*{uitvoerders}"/>
             <td th:text="| &euro; *{prijs} |"/>
             <td th:text="*{vrijeplaatsen}"/>
-            <td th:if="*{vrijeplaatsen > 0}"> <a th:href="@{/reserveren/{id}(id=*{id})}"  th:text="reserveren" /> </td>
+            <td> <a th:if="*{vrijeplaatsen > 0}" th:href="@{/reserveren/{id}(id=*{id})}"  th:text="reserveren" /> </td>
 
         </tr>
     </table>

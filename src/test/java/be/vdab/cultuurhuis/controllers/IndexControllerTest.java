@@ -1,9 +1,10 @@
 package be.vdab.cultuurhuis.controllers;
 
-import be.vdab.cultuurhuis.domain.Genre;
-import be.vdab.cultuurhuis.domain.Voorstelling;
+import be.vdab.cultuurhuis.entities.Genre;
+import be.vdab.cultuurhuis.entities.Voorstelling;
 import be.vdab.cultuurhuis.services.GenreService;
 import be.vdab.cultuurhuis.services.VoorstellingService;
+import be.vdab.cultuurhuis.sessions.MandSession;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +34,8 @@ public class IndexControllerTest {
     private GenreService genreService;
     @Mock
     private VoorstellingService voorstellingService;
+    @Mock
+    private MandSession mandSession;
 
     @Before
     public void before() {
@@ -42,7 +45,7 @@ public class IndexControllerTest {
         when(genreService.findAllOrderAlphabetical()).thenReturn(genres);
 
         when(voorstellingService.findAllVoorstellingVoorGenre(any())).thenReturn(voorstellingen);
-        indexController = new IndexController(genreService,voorstellingService);
+        indexController = new IndexController(genreService,voorstellingService,mandSession);
     }
 
     @Test

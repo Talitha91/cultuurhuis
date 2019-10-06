@@ -49,13 +49,15 @@
 
     <label>Paswoord
         <span th:errors="*{paswoord}"></span>
-        <input type="text" th:field="*{paswoord}" autofocus required>
+        <input type="password" th:field="*{paswoord}" autofocus required>
     </label>
 
     <label>Herhaal paswoord
         <span th:errors="*{paswoordcheck}"></span>
-        <input type="text" th:field="*{paswoordcheck}" autofocus required>
+        <input type="password" th:field="*{paswoordcheck}" autofocus required>
     </label>
+
+    <span th:if="${#fields.hasGlobalErrors()}" class="fout" th:each="err : ${#fields.globalErrors()}" th:text="${err}" />
 
     <input type="submit" value="OK" >
 </form>

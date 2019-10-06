@@ -1,8 +1,7 @@
 package be.vdab.cultuurhuis.services;
 
-import be.vdab.cultuurhuis.domain.Genre;
+import be.vdab.cultuurhuis.entities.Genre;
 import be.vdab.cultuurhuis.repositories.GenreRepository;
-import net.bytebuddy.description.type.TypeDefinition;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

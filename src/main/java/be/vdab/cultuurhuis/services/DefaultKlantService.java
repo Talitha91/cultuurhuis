@@ -1,9 +1,9 @@
 package be.vdab.cultuurhuis.services;
 
-import be.vdab.cultuurhuis.domain.Adres;
-import be.vdab.cultuurhuis.domain.Klant;
+import be.vdab.cultuurhuis.entities.Adres;
+import be.vdab.cultuurhuis.entities.Klant;
 import be.vdab.cultuurhuis.exceptions.KlantBestaatAlException;
-import be.vdab.cultuurhuis.form.NieuweKlantForm;
+import be.vdab.cultuurhuis.form.KlantForm;
 import be.vdab.cultuurhuis.repositories.KlantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,31 +19,16 @@ public class DefaultKlantService implements KlantService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     private final KlantRepository klantRepository;
 
     public DefaultKlantService(KlantRepository klantRepository) {
         this.klantRepository = klantRepository;
     }
 
-    @Override
-    public Optional<Klant> findByGebruikersnaam(String gebruikersnaam) {
-        return klantRepository.findByGebruikersnaam(gebruikersnaam);
-    }
-
-    @Override
-    public boolean bestaatGebruikersnaamAl(String gebruikersnaam) {
-        Optional<Klant> klant = klantRepository.findByGebruikersnaam(gebruikersnaam);
-
-        if (klant.isPresent()) {
-            return true;
-        }
-        return false;
-    }
 
     @Override
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
-    public Klant createKlantFromKlantForm(NieuweKlantForm klantForm) {
+    public Klant createKlantFromKlantForm(KlantForm klantForm) {
 
         if (gebruikersnaamBestaalAl(klantForm.getGebruikersnaam())){
             throw new KlantBestaatAlException();
@@ -60,11 +45,12 @@ public class DefaultKlantService implements KlantService {
         return klantRepository.save(klant);
     }
 
-    private boolean gebruikersnaamBestaalAl(String gebruikersnaam) {
+    @Override
+    public Optional<Klant> findByGebruikersnaam(String gebruikersnaam) {
+        return klantRepository.findByGebruikersnaam(gebruikersnaam);
+    }
 
-        if (findByGebruikersnaam(gebruikersnaam).isPresent()) {
-            return true;
-        }
-        return false;
+    private boolean gebruikersnaamBestaalAl(String gebruikersnaam) {
+        return findByGebruikersnaam(gebruikersnaam).isPresent();
     }
 }

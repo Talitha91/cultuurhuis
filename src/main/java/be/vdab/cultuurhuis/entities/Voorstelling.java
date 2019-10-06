@@ -1,4 +1,4 @@
-package be.vdab.cultuurhuis.domain;
+package be.vdab.cultuurhuis.entities;
 
 
 import javax.persistence.*;
@@ -38,10 +38,9 @@ public class Voorstelling implements Serializable {
     private Genre genre;
 
 
-    protected Voorstelling() {
-    }
+    protected Voorstelling() {}
 
-    public Voorstelling(@NotBlank String titel, @NotBlank String uitvoerders, @NotNull Date datum, @NotNull @Positive BigDecimal prijs, @PositiveOrZero long vrijeplaatsen, Genre genre) {
+    public Voorstelling(String titel, String uitvoerders, Date datum, BigDecimal prijs, long vrijeplaatsen, Genre genre) {
         this.titel = titel;
         this.uitvoerders = uitvoerders;
         this.datum = datum;
@@ -78,7 +77,7 @@ public class Voorstelling implements Serializable {
         return genre;
     }
 
-    public void verminderenplaatsen(int aantal){
+    public void verminderenPlaatsen(int aantal){
         this.vrijeplaatsen -= aantal;
     }
 

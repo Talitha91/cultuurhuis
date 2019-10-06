@@ -1,4 +1,4 @@
-package be.vdab.cultuurhuis.domain;
+package be.vdab.cultuurhuis.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,7 +20,7 @@ public class Genre implements Serializable {
     protected Genre() {
     }
 
-    public Genre(@NotBlank String naam) {
+    public Genre(String naam) {
         this.naam = naam;
     }
 

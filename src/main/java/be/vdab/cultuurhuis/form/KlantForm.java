@@ -5,7 +5,7 @@ import be.vdab.cultuurhuis.constraints.PasswordMatches;
 import javax.validation.constraints.Pattern;
 
 @PasswordMatches
-public class NieuweKlantForm {
+public class KlantForm {
 
     @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+")
     private String voornaam;
@@ -27,7 +27,7 @@ public class NieuweKlantForm {
     private String paswoordcheck;
 
 
-    public NieuweKlantForm(String voornaam, String familienaam, String straat, String huisnr, String postcode, String gemeente, String gebruikersnaam, String paswoord, String paswoordcheck) {
+    public KlantForm(String voornaam, String familienaam, String straat, String huisnr, String postcode, String gemeente, String gebruikersnaam, String paswoord, String paswoordcheck) {
         this.voornaam = voornaam;
         this.familienaam = familienaam;
         this.straat = straat;
@@ -113,7 +113,7 @@ public class NieuweKlantForm {
 
     @Override
     public String toString() {
-        return "NieuweKlantForm{" +
+        return "KlantForm{" +
                 "voornaam='" + voornaam + '\'' +
                 ", familienaam='" + familienaam + '\'' +
                 ", straat='" + straat + '\'' +

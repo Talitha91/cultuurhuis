@@ -1,6 +1,4 @@
-package be.vdab.cultuurhuis.domain;
-
-import be.vdab.cultuurhuis.constraints.ReservatieConstraint;
+package be.vdab.cultuurhuis.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,10 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "reservaties")
-@ReservatieConstraint
 public class Reservatie implements Serializable {
-
-    public interface klantToevoegen{}
 
     private final static long serialVersionUID = 1L;
 
@@ -23,7 +18,7 @@ public class Reservatie implements Serializable {
     private long id;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "klantid")
-    @NotNull(groups = klantToevoegen.class)
+    @NotNull
     private Klant klant;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "voorstellingid")

@@ -1,8 +1,7 @@
 package be.vdab.cultuurhuis.controllers;
 
-import be.vdab.cultuurhuis.domain.Klant;
 import be.vdab.cultuurhuis.exceptions.KlantBestaatAlException;
-import be.vdab.cultuurhuis.form.NieuweKlantForm;
+import be.vdab.cultuurhuis.form.KlantForm;
 import be.vdab.cultuurhuis.services.KlantService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,29 +27,23 @@ public class NieuweGebruikerController {
     @GetMapping
     public String goToNieuweGebruikerPagina(Model model) {
 
-        NieuweKlantForm klantform = new NieuweKlantForm(null,null,null,null,null,null,null,null,null);
-
-
-        model.addAttribute("klant", klantform);
+        model.addAttribute("klant", new KlantForm(null,null,null,null,null,null,null,null,null));
 
         return "nieuwegebruikerform";
     }
 
     @PostMapping("/opslaan")
-    public String slaNieuweKlantOp(Model model, @Valid @ModelAttribute("klant") NieuweKlantForm klant, BindingResult result){
+    public String slaNieuweKlantOp(Model model, @Valid @ModelAttribute("klant") KlantForm klant, BindingResult result){
 
         if (result.hasErrors()){
             return "nieuwegebruikerform";
         }
-
-        Klant nieuweKlant;
-
         try{
-            nieuweKlant = klantService.createKlantFromKlantForm(klant);
+            klantService.createKlantFromKlantForm(klant);
+            return "redirect:/login";
         }catch (KlantBestaatAlException ex){
-            result.rejectValue("gebruikersnaam","message.regError");
+            result.rejectValue("gebruikersnaam","Gebruikerns.BestaatAl","gebruikersnaam bestaat al");
+            return "nieuwegebruikerform";
         }
-
-        return "redirect:/login";
     }
 }
