@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultKlantServiceTest {
@@ -15,18 +17,15 @@ public class DefaultKlantServiceTest {
     private KlantRepository klantRepository;
     private DefaultKlantService defaultKlantService;
 
+    private KlantForm KlantForm;
+
     @Before
     public void before(){
-        KlantForm KlantForm = new KlantForm("test","test",
+        KlantForm = new KlantForm("test","test",
                 "test","test",
                 "1000","test","test","test","test");
 
+        defaultKlantService = new DefaultKlantService(klantRepository);
     }
-
-    @Test
-    public void createKlantFromKlantenFormGooitExceptionAlsKlantAlBestaat(){
-
-    }
-
-
+    
 }
