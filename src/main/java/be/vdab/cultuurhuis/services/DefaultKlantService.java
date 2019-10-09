@@ -6,25 +6,24 @@ import be.vdab.cultuurhuis.exceptions.KlantBestaatAlException;
 import be.vdab.cultuurhuis.form.KlantForm;
 import be.vdab.cultuurhuis.repositories.KlantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 public class DefaultKlantService implements KlantService {
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
     private final KlantRepository klantRepository;
 
     public DefaultKlantService(KlantRepository klantRepository) {
         this.klantRepository = klantRepository;
+        passwordEncoder = new BCryptPasswordEncoder();
     }
-
 
     @Override
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
@@ -41,7 +40,6 @@ public class DefaultKlantService implements KlantService {
                 klantForm.getGebruikersnaam(),
                 passwordEncoder.encode(klantForm.getPaswoord())
         );
-
         return klantRepository.save(klant);
     }
 

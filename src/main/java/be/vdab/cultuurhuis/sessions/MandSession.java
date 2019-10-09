@@ -62,9 +62,9 @@ public class MandSession {
 
     public BigDecimal getTotaalTeBetalen(){
         BigDecimal result = BigDecimal.ZERO;
+
         for (ReservatieForm reservatie : reservaties) {
            result = result.add(reservatie.getVoorstelling().getPrijs().multiply(BigDecimal.valueOf(reservatie.getPlaatsen())));
-
         }
         return result;
     }

@@ -31,20 +31,16 @@ public class ReservatieController {
         ReservatieForm reservatie = mandSession.geefReservatieVoorVoorstellingOfMaakNieuweReservatie(voorstelling);
 
         model.addAttribute("reservatie", reservatie);
-        model.addAttribute("mandsize",mandSession.getMandSize());
-
         return "plaatsreservatie";
     }
 
     @PostMapping("/opslaan")
-    public String opslaanReservatie(Model model, @Valid @ModelAttribute("reservatie") ReservatieForm reservatie, BindingResult result, SessionStatus sessionStatus, Errors errors){
+    public String opslaanReservatie(Model model, @Valid @ModelAttribute("reservatie") ReservatieForm reservatie, BindingResult result, SessionStatus sessionStatus){
         if (result.hasErrors()){
-            model.addAttribute("mandsize",mandSession.getMandSize());
             return "plaatsreservatie";
         }
         mandSession.addReservatie(reservatie);
         sessionStatus.setComplete();
-        model.addAttribute("mandsize",mandSession.getMandSize());
 
         return "redirect:/";
     }

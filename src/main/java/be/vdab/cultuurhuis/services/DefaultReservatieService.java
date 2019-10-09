@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
@@ -26,10 +28,11 @@ public class DefaultReservatieService implements ReservatieService {
 
     @Override
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
-    public List<List<Reservatie>> createAll(List<ReservatieForm> reservatieForms, Klant klant) {
+    public Map<String,List<Reservatie>> createAll(List<ReservatieForm> reservatieForms, Klant klant) {
 
         List<Reservatie> reservaties = convertFormToReservatie(reservatieForms,klant);
 
+        Map<String,List<Reservatie>> gelukteEnMislukteReservaties = new HashMap<>();
         List<Reservatie> mislukteReservaties = new ArrayList<>();
         List<Reservatie> gelukteReservaties = new ArrayList<>();
 
@@ -46,10 +49,8 @@ public class DefaultReservatieService implements ReservatieService {
             }
         }
 
-        List<List<Reservatie>> gelukteEnMislukteReservaties = new ArrayList<>();
-        gelukteEnMislukteReservaties.add(gelukteReservaties);
-        gelukteEnMislukteReservaties.add(mislukteReservaties);
-
+        gelukteEnMislukteReservaties.put("gelukt",gelukteReservaties);
+        gelukteEnMislukteReservaties.put("mislukt",mislukteReservaties);
         return gelukteEnMislukteReservaties;
     }
 

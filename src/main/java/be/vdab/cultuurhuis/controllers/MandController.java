@@ -9,10 +9,10 @@ import be.vdab.cultuurhuis.sessions.MandSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/mand")
@@ -36,15 +36,14 @@ public class MandController {
         model.addAttribute("reservaties", mandSession.getAlleReservaties());
         model.addAttribute("totaalBetalen",mandSession.getTotaalTeBetalen());
         model.addAttribute("deletelist", new ArrayList<>());
-        model.addAttribute("mandsize",mandSession.getMandSize());
         return "mand";
     }
 
     @PostMapping("/verwijderen")
-    public String VerwijderGekozenReservaties(Model model, @RequestParam List<Long> deletelist ){
+    public String verwijderGekozenReservaties(Model model, @RequestParam List<Long> deletelist ){
 
         mandSession.deleteReservaties(voorstellingService.findByIds(deletelist));
-        return "redirect:/";
+        return "redirect:/mand";
     }
 
     @GetMapping("/bevestigen")
@@ -55,14 +54,14 @@ public class MandController {
     }
 
     @PostMapping("/opslaan")
-    public String ReservatiesOpslaan(Model model, Principal principal){
+    public String reservatiesOpslaan(Model model, Principal principal){
 
         Klant klant = klantService.findByGebruikersnaam(principal.getName()).get();
 
-        List<List<Reservatie>> gelukteEnMislukteReservatie = reservatieService.createAll(mandSession.getAlleReservaties(),klant);
+        Map<String,List<Reservatie>> gelukteEnMislukteReservatie = reservatieService.createAll(mandSession.getAlleReservaties(),klant);
 
-        model.addAttribute("misluktereservaties", gelukteEnMislukteReservatie.get(1));
-        model.addAttribute("allereservaties", gelukteEnMislukteReservatie.get(0));
+        model.addAttribute("misluktereservaties", gelukteEnMislukteReservatie.get("mislukt"));
+        model.addAttribute("geluktereservaties", gelukteEnMislukteReservatie.get("gelukt"));
 
         mandSession.clearMand();
 

@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import java.util.Optional;
 
 @Controller
@@ -30,8 +29,6 @@ public class IndexController {
     public String goToWelkomPagina(Model model){
 
         model.addAttribute("genres",genreService.findAllOrderAlphabetical());
-
-        model.addAttribute("mandsize",mandSession.getMandSize());
         return "welkompagina";
     }
 
@@ -43,8 +40,6 @@ public class IndexController {
             model.addAttribute("gekozengenre",gekozenGenre);
             model.addAttribute("voorstellingen", voorstellingService.findAllVoorstellingVoorGenre(gekozenGenre));
         }
-
-        model.addAttribute("mandsize",mandSession.getMandSize());
         return goToWelkomPagina(model);
     }
 

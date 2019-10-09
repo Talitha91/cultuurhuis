@@ -5,9 +5,10 @@ import be.vdab.cultuurhuis.entities.Reservatie;
 import be.vdab.cultuurhuis.form.ReservatieForm;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ReservatieService {
 
-    List<List<Reservatie>> createAll(List<ReservatieForm> reservatiesForm, Klant klant);
+    Map<String,List<Reservatie>> createAll(List<ReservatieForm> reservatiesForm, Klant klant);
 
 }

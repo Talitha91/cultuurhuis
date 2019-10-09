@@ -41,7 +41,6 @@ public class NieuweGebruikerControllerTest {
 
         controller = new NieuweGebruikerController(klantService);
 
-        when(klantService.findByGebruikersnaam(any())).thenReturn(null);
     }
 
     @Test
