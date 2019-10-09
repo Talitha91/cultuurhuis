@@ -14,6 +14,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.sql.Date;
@@ -110,8 +112,9 @@ public class MandControllerTest {
         Model model = new ExtendedModelMap();
         Principal mockPrincipal = Mockito.mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("testnaam");
+        RedirectAttributes attributes = Mockito.mock(RedirectAttributes.class);
 
-        assertThat(mandController.reservatiesOpslaan(model,mockPrincipal)).isEqualTo("confirmatiepagina");
+        assertThat(mandController.reservatiesOpslaan(model,mockPrincipal,attributes)).isEqualTo("confirmatiepagina");
     }
 
     @Test
@@ -119,8 +122,9 @@ public class MandControllerTest {
         Model model = new ExtendedModelMap();
         Principal mockPrincipal = Mockito.mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("testnaam");
+        RedirectAttributes attributes = Mockito.mock(RedirectAttributes.class);
 
-        mandController.reservatiesOpslaan(model,mockPrincipal);
+        mandController.reservatiesOpslaan(model,mockPrincipal,attributes);
 
         assertThat(model.asMap().get("misluktereservaties")).isInstanceOf(List.class);
         assertThat(model.asMap().get("geluktereservaties")).isInstanceOf(List.class);

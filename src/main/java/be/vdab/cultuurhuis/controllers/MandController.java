@@ -9,6 +9,8 @@ import be.vdab.cultuurhuis.sessions.MandSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,21 +51,38 @@ public class MandController {
     @GetMapping("/bevestigen")
     public String goToBevestigingPagina(Model model, Principal principal){
 
+        if (mandSession.getMandSize()==0){
+            return "redirect:/mand";
+        }
+
         model.addAttribute("klant",klantService.findByGebruikersnaam(principal.getName()).get());
         return "bevestigen";
     }
 
     @PostMapping("/opslaan")
-    public String reservatiesOpslaan(Model model, Principal principal){
+    public String reservatiesOpslaan(Model model, Principal principal, RedirectAttributes attributes){
 
         Klant klant = klantService.findByGebruikersnaam(principal.getName()).get();
 
         Map<String,List<Reservatie>> gelukteEnMislukteReservatie = reservatieService.createAll(mandSession.getAlleReservaties(),klant);
 
-        model.addAttribute("misluktereservaties", gelukteEnMislukteReservatie.get("mislukt"));
-        model.addAttribute("geluktereservaties", gelukteEnMislukteReservatie.get("gelukt"));
+        attributes.addFlashAttribute("misluktereservaties", gelukteEnMislukteReservatie.get("mislukt"));
+        attributes.addFlashAttribute("geluktereservaties", gelukteEnMislukteReservatie.get("gelukt"));
+
 
         mandSession.clearMand();
+
+        return "redirect:/mand/confirmatiepagina";
+    }
+
+    @GetMapping("/confirmatiepagina")
+    public String goToConfimatiePagina(Model model,
+                                       @ModelAttribute("misluktereservaties") List<Reservatie> mislukteReservaties,
+                                       @ModelAttribute("geluktereservaties") List<Reservatie> gelukteReservaties ){
+
+
+        model.addAttribute("misluktereservaties",mislukteReservaties);
+        model.addAttribute("geluktereservaties", gelukteReservaties);
 
         return "confirmatiepagina";
     }
