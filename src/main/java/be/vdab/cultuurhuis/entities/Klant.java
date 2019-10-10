@@ -3,6 +3,7 @@ package be.vdab.cultuurhuis.entities;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
@@ -16,14 +17,18 @@ public class Klant implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+")
+    @NotNull
     private String voornaam;
     @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+")
+    @NotNull
     private String familienaam;
     @Valid
     @Embedded
+    @NotNull
     private Adres adres;
 
     @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+")
+    @NotNull
     private String gebruikersnaam;
     @NotBlank
     private String paswoord;

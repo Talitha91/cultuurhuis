@@ -2,28 +2,38 @@ package be.vdab.cultuurhuis.form;
 
 import be.vdab.cultuurhuis.constraints.PasswordMatches;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @PasswordMatches
 public class KlantForm {
 
     @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+")
+    @NotNull
     private String voornaam;
     @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+")
+    @NotNull
     private String familienaam;
     @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+")
+    @NotNull
     private String straat;
     @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+")
+    @NotNull
     private String huisnr;
-    @Pattern(regexp = "(\\p{N})+")
+    @Pattern(regexp = "(\\p{N}){4}")
+    @NotNull
     private String postcode;
     @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+")
+    @NotNull
     private String gemeente;
     @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+")
+    @NotNull
     private String gebruikersnaam;
     @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+")
+    @NotNull
     private String paswoord;
     @Pattern(regexp = "(\\p{L}|\\p{N}|-|\\.)+")
+    @NotNull
     private String paswoordcheck;
 
 

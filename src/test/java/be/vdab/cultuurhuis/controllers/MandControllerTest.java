@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class MandControllerTest {
 
-    @Mock
+
     private MandSession mandSession;
     @Mock
     private KlantService klantService;
@@ -42,7 +42,8 @@ public class MandControllerTest {
 
     @Before
     public void before(){
-        when(klantService.findByGebruikersnaam("testnaam"))
+        mandSession = new MandSession();
+        when(klantService.findByGebruikersnaam(any()))
                 .thenReturn(Optional.of(new Klant("testnaam",
                         "testnaam",
                         new Adres("teststraat","3","3000","TestG"),
@@ -90,6 +91,12 @@ public class MandControllerTest {
         Principal mockPrincipal = Mockito.mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("testnaam");
 
+        Genre genre = new Genre("test");
+        Voorstelling voorstelling = new Voorstelling("test","test",new Date(1),
+                BigDecimal.ONE,100,genre);
+
+        mandSession.addReservatie(new ReservatieForm(voorstelling,1));
+
         assertThat(mandController.goToBevestigingPagina(model,mockPrincipal)).isEqualTo("bevestigen");
     }
 
@@ -99,7 +106,12 @@ public class MandControllerTest {
         Principal mockPrincipal = Mockito.mock(Principal.class);
         when(mockPrincipal.getName()).thenReturn("testnaam");
 
-        mandController.goToBevestigingPagina(model,mockPrincipal);
+        Voorstelling voorstelling = new Voorstelling("test","test",
+                new Date(1),BigDecimal.TEN,10,new Genre("test"));
+        mandSession.addReservatie(new ReservatieForm(voorstelling,2));
+
+
+      String s =  mandController.goToBevestigingPagina(model,mockPrincipal);
 
         assertThat(model.asMap().get("klant")).isInstanceOf(Klant.class);
 
@@ -114,20 +126,7 @@ public class MandControllerTest {
         when(mockPrincipal.getName()).thenReturn("testnaam");
         RedirectAttributes attributes = Mockito.mock(RedirectAttributes.class);
 
-        assertThat(mandController.reservatiesOpslaan(model,mockPrincipal,attributes)).isEqualTo("confirmatiepagina");
-    }
-
-    @Test
-    public void ReservatieOpslaanGeeftLijstVanGelukteEnMislukteReservaties(){
-        Model model = new ExtendedModelMap();
-        Principal mockPrincipal = Mockito.mock(Principal.class);
-        when(mockPrincipal.getName()).thenReturn("testnaam");
-        RedirectAttributes attributes = Mockito.mock(RedirectAttributes.class);
-
-        mandController.reservatiesOpslaan(model,mockPrincipal,attributes);
-
-        assertThat(model.asMap().get("misluktereservaties")).isInstanceOf(List.class);
-        assertThat(model.asMap().get("geluktereservaties")).isInstanceOf(List.class);
+        assertThat(mandController.reservatiesOpslaan(model,mockPrincipal,attributes)).isEqualTo("redirect:/mand/confirmatiepagina");
     }
 
 

@@ -2,6 +2,7 @@ package be.vdab.cultuurhuis.entities;
 
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
@@ -10,13 +11,17 @@ public class Adres implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Pattern(regexp = "(\\p{L}|\\p{N}|_|-|\\.)+")
+    @Pattern(regexp = "(\\p{L}|\\p{N}|'|-|\\.)+")
+    @NotNull
     private String straat;
     @Pattern(regexp = "(\\p{L}|\\p{N}|_|-|\\.)+")
+    @NotNull
     private String huisnr;
-    @Pattern(regexp = "(\\p{N})+")
+    @Pattern(regexp = "(\\p{N}){4}")
+    @NotNull
     private String postcode;
     @Pattern(regexp = "(\\p{L}|\\p{N}|_|-|\\.)+")
+    @NotNull
     private String gemeente;
 
     protected Adres() {}

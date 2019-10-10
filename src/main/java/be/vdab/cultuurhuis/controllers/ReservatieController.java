@@ -37,6 +37,7 @@ public class ReservatieController {
     @PostMapping("/opslaan")
     public String opslaanReservatie(Model model, @Valid @ModelAttribute("reservatie") ReservatieForm reservatie, BindingResult result, SessionStatus sessionStatus){
         if (result.hasErrors()){
+            reservatie.setPlaatsen(0);
             return "plaatsreservatie";
         }
         mandSession.addReservatie(reservatie);

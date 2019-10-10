@@ -16,7 +16,7 @@
         <th>Uitvoerders</th>
         <th>Prijs</th>
         <th>Plaatsen</th>
-        <th><input type="submit" th:value="Verwijderen" ></th>
+        <th><input th:if="${mandsize > 0}" type="submit" th:value="Verwijderen" ></th>
     </tr>
     <tr th:each="reservatie:${reservaties}" th:object="${reservatie}" >
         <td th:text="${reservatie.voorstelling.datum}" />

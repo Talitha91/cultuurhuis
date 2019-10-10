@@ -44,7 +44,9 @@ public class MandController {
     @PostMapping("/verwijderen")
     public String verwijderGekozenReservaties(Model model, @RequestParam List<Long> deletelist ){
 
-        mandSession.deleteReservaties(voorstellingService.findByIds(deletelist));
+        if (deletelist.size()>0) {
+            mandSession.deleteReservaties(voorstellingService.findByIds(deletelist));
+        }
         return "redirect:/mand";
     }
 
@@ -61,6 +63,10 @@ public class MandController {
 
     @PostMapping("/opslaan")
     public String reservatiesOpslaan(Model model, Principal principal, RedirectAttributes attributes){
+
+        if (mandSession.getMandSize()<=0){
+            return "500";
+        }
 
         Klant klant = klantService.findByGebruikersnaam(principal.getName()).get();
 
