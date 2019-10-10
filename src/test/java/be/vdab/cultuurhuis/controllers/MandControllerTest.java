@@ -126,6 +126,10 @@ public class MandControllerTest {
         when(mockPrincipal.getName()).thenReturn("testnaam");
         RedirectAttributes attributes = Mockito.mock(RedirectAttributes.class);
 
+        Voorstelling voorstelling = new Voorstelling("test","test",
+                new Date(1),BigDecimal.TEN,10,new Genre("test"));
+        mandSession.addReservatie(new ReservatieForm(voorstelling,2));
+
         assertThat(mandController.reservatiesOpslaan(model,mockPrincipal,attributes)).isEqualTo("redirect:/mand/confirmatiepagina");
     }
 
