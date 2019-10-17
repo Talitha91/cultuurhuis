@@ -43,7 +43,7 @@ public class Voorstelling implements Serializable {
     public Voorstelling(String titel, String uitvoerders, Date datum, BigDecimal prijs, long vrijeplaatsen, Genre genre) {
         this.titel = titel;
         this.uitvoerders = uitvoerders;
-        this.datum = datum;
+        this.datum = new Date(datum.getYear(),datum.getMonth(),datum.getDay());
         this.prijs = prijs;
         this.vrijeplaatsen = vrijeplaatsen;
         this.genre = genre;
@@ -61,8 +61,9 @@ public class Voorstelling implements Serializable {
         return uitvoerders;
     }
 
-    public Date getDatum() {
-        return datum;
+    public String getDatum() {
+
+        return datum.toString();
     }
 
     public BigDecimal getPrijs() {
