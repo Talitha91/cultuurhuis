@@ -61,11 +61,6 @@ public class Voorstelling implements Serializable {
         return uitvoerders;
     }
 
-    public String getDatum() {
-
-        return datum.toString();
-    }
-
     public BigDecimal getPrijs() {
         return prijs;
     }
